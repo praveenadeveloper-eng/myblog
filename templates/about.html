@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="jumbotron hero text-center">
+    <h1 class="display-4 text-light">
+        {{ detail.heading }}
+    </h1>
+</div>
+
+<div class="row mt-5 align-items-center">
+
+    <div class="col-lg-5">
+        {% if detail.image %}
+        <img src="{{ detail.image.url }}"
+             class="img-fluid rounded shadow-lg"
+             alt="{{ detail.heading }}">
+        {% endif %}
+    </div>
+
+    <div class="col-lg-7">
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+
+                <h2 class="mb-3">
+                    {{ detail.heading }}
+                </h2>
+
+                <div class="text-muted">
+                    {{ detail.content|linebreaks }}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

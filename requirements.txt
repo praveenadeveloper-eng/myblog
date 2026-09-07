@@ -1,0 +1,8 @@
+Django==5.2.17
+djangorestframework
+python-decouple
+Pillow
+gunicorn
+mysqlclient
+django-crispy-forms
+django-crispy-bootstrap4

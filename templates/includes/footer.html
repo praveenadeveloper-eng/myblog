@@ -1,0 +1,159 @@
+<style>
+    .footer {
+        background: #111827;
+        color: #fff;
+        width: 100%;
+        margin: 0;
+    }
+
+    .footer-link {
+        color: #adb5bd;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+        margin-bottom: 8px;
+    }
+
+    .footer-link:hover {
+        color: #ffc107;
+        text-decoration: none;
+        transform: translateX(5px);
+    }
+
+    .footer-icon {
+        color: #adb5bd;
+        font-size: 22px;
+        margin-right: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .footer-icon:hover {
+        color: #ffc107;
+    }
+
+    .footer-title {
+        color: #ffc107;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .footer hr {
+        border-color: #374151;
+    }
+</style>
+
+<footer class="footer">
+    <div class="container-fluid px-5 py-5">
+
+        <div class="row">
+
+            <!-- Brand -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <h3 class="footer-title">
+                    MyBlog
+                </h3>
+
+                <p class="text-muted">
+                    Discover articles on Django, Python,
+                    Web Development, Programming,
+                    Technology and Software Engineering.
+                </p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-lg-2 col-md-6 mb-4">
+                <h5 class="footer-title">
+                    Quick Links
+                </h5>
+
+                <ul class="list-unstyled">
+                    <li><a href="/" class="footer-link">Home</a></li>
+                    <li><a href="#" class="footer-link">About</a></li>
+                    <li><a href="#" class="footer-link">Contact</a></li>
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <!-- Categories -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5 class="footer-title">
+                    Categories
+                </h5>
+
+                <ul class="list-unstyled">
+                    {% for category in categories|slice:":5" %}
+                    <li>
+                        <a href="{% url 'category_posts' category.id %}"
+                           class="footer-link">
+                            {{ category.category_name }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5 class="footer-title">
+                    Newsletter
+                </h5>
+
+                <p class="text-muted small">
+                    Get the latest blog updates.
+                </p>
+
+                <form>
+                    <div class="input-group">
+                        <input type="email"
+                               class="form-control"
+                               placeholder="Enter email">
+
+                        <div class="input-group-append">
+                            <button class="btn btn-warning">
+                                Subscribe
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="row align-items-center">
+
+            <div class="col-md-6">
+                <p class="mb-0 text-muted">
+                    © 2026 MyBlog. All Rights Reserved.
+                </p>
+            </div>
+
+            <div class="col-md-6 text-md-right mt-3 mt-md-0">
+
+                <a href="#" class="footer-icon">
+                    <i class="fab fa-github"></i>
+                </a>
+
+                <a href="#" class="footer-icon">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+
+                <a href="#" class="footer-icon">
+                    <i class="fab fa-twitter"></i>
+                </a>
+
+                <a href="#" class="footer-icon">
+                    <i class="fab fa-instagram"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</footer>
+
+<!-- Font Awesome -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">

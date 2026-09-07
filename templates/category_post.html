@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h2>{{ category.category_name }}</h2>
+
+<div class="row">
+    {% for post in posts %}
+    <div class="col-md-6 mb-4">
+        <div class="card blog-card h-100">
+
+            {% if post.featured_image %}
+            <img src="{{ post.featured_image.url }}"
+                 class="card-img-top">
+            {% endif %}
+
+            <div class="card-body">
+                <h4>{{ post.title }}</h4>
+
+                <p>
+                    {{ post.short_description|truncatewords:20 }}
+                </p>
+
+                <a href="{% url 'post_detail' post.slug %}" class="btn btn-dark">
+                    Read More
+                </a>
+            </div>
+
+        </div>
+    </div>
+    {% empty %}
+        <p>No posts found.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

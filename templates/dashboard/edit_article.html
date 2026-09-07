@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+<div class="row">
+
+    {% include 'dashboard/list.html' %}
+    <div class="col-md-9">
+        <h3> <strong>Edit Article</strong></h3>
+
+        <form action="{% url 'edit_articles' articles.id %}" method="POST" enctype="multipart/form-data  style="width: 500px;">
+            {% csrf_token %}
+            {{form |crispy }}
+            <button type="submit" class="btn btn-warning" >Submit</button>
+        </form>
+
+    </div>
+</div>
+
+
+{% endblock %}

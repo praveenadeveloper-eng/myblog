@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-9">
+
+            <article class="card border-0 shadow-sm">
+
+                {% if post.featured_image %}
+                <img src="{{ post.featured_image.url }}"
+                     class="card-img-top"
+                     alt="{{ post.title }}"
+                     style="max-height:500px; object-fit:cover;">
+                {% endif %}
+
+                <div class="card-body p-4">
+
+                    <!-- Category -->
+                    <span class="badge bg-warning text-dark mb-3">
+                        {{ post.category.category_name }}
+                    </span>
+
+                    <!-- Title -->
+                    <h1 class="fw-bold mb-3">
+                        {{ post.title }}
+                    </h1>
+
+                    <!-- Author & Date -->
+                    <div class="d-flex align-items-center mb-4">
+
+                        <div>
+                            <h6 class="mb-0">
+                                {{ post.author }}
+                            </h6>
+
+                            <small class="text-muted">
+                                Published {{ post.created_at|timesince }} ago
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <!-- Short Description -->
+                    <div class="alert alert-light border-start border-4 border-warning">
+                        {{ post.short_description }}
+                    </div>
+
+                    <!-- Blog Content -->
+                    <div class="mt-4 fs-5 lh-lg">
+                        {{ post.blogbody|linebreaks }}
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex gap-2 flex-wrap">
+
+                        <button class="btn btn-outline-danger">
+                            ❤️ Like
+                        </button>
+
+                        <button class="btn btn-outline-primary">
+                            👤 Follow Author
+                        </button>
+
+                        <button class="btn btn-outline-success">
+                            🔖 Save Post
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+            <!-- Comments Section -->
+
+            <div class="card shadow-sm border-0 mt-4">
+
+                <div class="card-header bg-white">
+                    <h4 class="mb-0">
+                        Comments {{comment_count}}
+                    </h4>
+                </div>
+
+                <div class="card-body">
+
+                    {% for comment in comments %}
+
+                    <div class="mb-4">
+
+                        <h6 class="mb-1">
+                            {{ comment.user }}
+                        </h6>
+
+                        <small class="text-muted">
+                            {{ comment.created_at|timesince }} ago
+                        </small>
+
+                        <p class="mt-2 mb-0">
+                            {{ comment.comment }}
+                        </p>
+
+                    </div>
+
+                    <hr>
+
+                    {% empty %}
+
+                    <div class="text-center py-3">
+                        <p class="text-muted">
+                            No comments yet.
+                        </p>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+            <!-- Comment Form -->
+
+            <div class="card shadow-sm border-0 mt-4">
+
+                <div class="card-header bg-white">
+                    <h4 class="mb-0">
+                        Leave a Comment
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    {% if user.authenticated %}
+
+                    <form method="POST" action="">
+                        {% csrf_token %}
+
+                        <textarea
+                            name="comment"
+                            rows="5"
+                            class="form-control"
+                            placeholder="Write your comment here..."></textarea>
+
+                        <button type="submit"
+                                class="btn btn-dark mt-3">
+                            Post Comment
+                        </button>
+
+                    </form>
+                    {% else %}
+                    <p>Please <span><a href="{% url 'login_page' %}" > Login</a></span> to Wrie The Comment</p>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

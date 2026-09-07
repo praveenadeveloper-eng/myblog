@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+
+    <!-- <div class="col-md-3">
+        <div class="nav flex-column nav-pills bg-light" aria-orientation="vertical">
+            <a href="" class="nav-link text-dark bg-warning">Dashboard</a>
+            <a href="{% url 'categories' %}" class="nav-link text-dark">Categories</a>
+            <a href="" class="nav-link text-dark">Article</a>
+            <a href="" class="nav-link text-dark">Logout</a>
+        </div>
+    </div> -->
+    {% include 'dashboard/list.html' %}
+
+    <div class="col-md-9">
+        <span><strong>{{user}}</strong></span>
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="card border-default mb-3">
+                    <div class="card-header text-center text-uppercase font-weight-bold">
+                        All Categories
+                    </div>
+                    <div class="card-body text-dark">
+                        <h5 class="card-title text-center">
+                            {{category_counts}}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card border-default mb-3">
+                    <div class="card-header text-center text-uppercase font-weight-bold">
+                        All Posts
+                    </div>
+                    <div class="card-body text-dark">
+                        <h5 class="card-title text-center">
+                            {{article_counts}}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
