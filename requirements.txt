@@ -5,4 +5,4 @@ Pillow
 gunicorn
 mysqlclient
 django-crispy-forms
-django-crispy-bootstrap4
+crispy-bootstrap4
