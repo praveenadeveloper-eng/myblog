@@ -3,6 +3,6 @@ djangorestframework
 python-decouple
 Pillow
 gunicorn
-mysqlclient
+PyMySQL
 django-crispy-forms
 crispy-bootstrap4
