@@ -81,7 +81,10 @@ def post_detail(request, slug):
 
 
 def about(request):
-    detail = About.objects.latest('created_at')
+    try:
+        detail = About.objects.latest('created_at')
+    except About.DoesNotExist:
+        detail = None
 
     return render(request, 'about.html', {'detail': detail})
 
