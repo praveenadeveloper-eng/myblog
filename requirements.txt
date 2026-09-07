@@ -6,3 +6,5 @@ gunicorn
 PyMySQL
 django-crispy-forms
 crispy-bootstrap4
+psycopg2-binary
+dj-database-url
