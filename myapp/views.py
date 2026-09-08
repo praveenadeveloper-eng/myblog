@@ -59,21 +59,27 @@ def post_detail(request, slug):
     else:
         post = get_object_or_404(Article, slug=slug, status='Published')
 
-    if request.method=='POST':
-        comment=Comment()
-        comment.user = request.user
-        comment.article =post
-        comment.comment=request.POST['comment']
-        comment.save()
-        return HttpResponseRedirect (request.path_info)
-    comments=Comment.objects.filter(article=post)
-    comment_count=comments.count()
-    print(comments)
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            messages.warning(request, "Please login to write a comment.")
+            return redirect('login_page')
+        comment_text = request.POST.get('comment', '').strip()
+        if comment_text:
+            Comment.objects.create(
+                user=request.user,
+                article=post,
+                comment=comment_text
+            )
+            messages.success(request, "Your comment has been posted!")
+        return HttpResponseRedirect(request.path_info)
+
+    comments = Comment.objects.filter(article=post).order_by('-created_at')
+    comment_count = comments.count()
 
     context = {
         'post': post,
-        'comments':comments,
-        'comment_count':comment_count
+        'comments': comments,
+        'comment_count': comment_count
     }
 
     return render(request, 'post_detail.html', context)
