@@ -21,7 +21,7 @@ class Article(models.Model):
     title=models.CharField(max_length=100,unique=True)
     author=models.ForeignKey(User,on_delete=models.CASCADE,related_name='articles')
     slug=models.SlugField(max_length=200,blank=True,unique=True)
-    featured_image = models.ImageField(upload_to='articles/%Y/%m/%d')
+    featured_image = models.ImageField(upload_to='articles/%Y/%m/%d', blank=True, null=True)
     short_description=models.CharField(max_length=500)
     blogbody=models.TextField()
     status=models.CharField(max_length=20,choices=STATUS_CHOICES,default="Draft")
@@ -43,7 +43,7 @@ def __str__(self):
 class About(models.Model):
     heading = models.CharField(max_length=100)
     content = models.TextField()
-    image = models.ImageField(upload_to='about/')
+    image = models.ImageField(upload_to='about/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
