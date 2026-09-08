@@ -8,15 +8,6 @@
     No posts found.
 </div>
 {% endif %}
-<div class="scroll-container mt-4 mb-4">
-    <div class="scroll-text">
-        {% for category in categories %}
-        <a href="{% url 'category_posts' category.id %}" class="d-inline-block fw-bold me-5">
-            <strong style="color: rgb(17, 17, 17);" class="me-4"> {{ category.category_name }} </strong>
-        </a>
-        {% endfor %}
-    </div>
-</div>
 {% for post in posts %}
 {% if forloop.first %}
 <div class="jumbotron hero">
