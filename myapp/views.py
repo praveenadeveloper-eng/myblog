@@ -54,11 +54,10 @@ def category_posts(request, id):
 
 def post_detail(request, slug):
 
-    post = get_object_or_404(
-        Article,
-        slug=slug,
-        status='Published'
-    )
+    if request.user.is_staff:
+        post = get_object_or_404(Article, slug=slug)
+    else:
+        post = get_object_or_404(Article, slug=slug, status='Published')
 
     if request.method=='POST':
         comment=Comment()
