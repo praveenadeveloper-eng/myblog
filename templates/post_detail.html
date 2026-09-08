@@ -62,18 +62,18 @@
                     <hr class="my-4">
 
                     <!-- Action Buttons -->
-                    <div class="d-flex gap-2 flex-wrap">
+                    <div class="d-flex flex-wrap align-items-center mt-3">
 
-                        <button class="btn btn-outline-danger">
-                            ❤️ Like
+                        <button type="button" id="likeBtn" class="btn btn-outline-danger mr-2 mb-2" onclick="toggleLike()">
+                            <span id="likeHeart">🤍</span> <span id="likeText">Like</span> (<span id="likeCount">0</span>)
                         </button>
 
-                        <button class="btn btn-outline-primary">
-                            👤 Follow Author
+                        <button type="button" id="followBtn" class="btn btn-outline-primary mr-2 mb-2" onclick="toggleFollow()">
+                            <span id="followIcon">👤</span> <span id="followText">Follow Author</span>
                         </button>
 
-                        <button class="btn btn-outline-success">
-                            🔖 Save Post
+                        <button type="button" id="saveBtn" class="btn btn-outline-success mb-2" onclick="toggleSave()">
+                            <span id="saveIcon">🔖</span> <span id="saveText">Save Post</span>
                         </button>
 
                     </div>
@@ -139,7 +139,7 @@
                 </div>
 
                 <div class="card-body">
-                    {% if user.authenticated %}
+                    {% if user.is_authenticated %}
 
                     <form method="POST" action="">
                         {% csrf_token %}
@@ -157,7 +157,7 @@
 
                     </form>
                     {% else %}
-                    <p>Please <span><a href="{% url 'login_page' %}" > Login</a></span> to Wrie The Comment</p>
+                    <p class="text-muted mb-0">Please <span><a href="{% url 'login_page' %}">Login</a></span> to write a comment.</p>
                     {% endif %}
 
                 </div>
@@ -169,5 +169,99 @@
     </div>
 
 </div>
+
+<script>
+    const postSlug = "{{ post.slug }}";
+
+    // Like logic
+    let isLiked = localStorage.getItem('liked_' + postSlug) === 'true';
+    let likeCount = parseInt(localStorage.getItem('like_count_' + postSlug) || '0');
+
+    function updateLikeUI() {
+        const btn = document.getElementById('likeBtn');
+        const heart = document.getElementById('likeHeart');
+        const countSpan = document.getElementById('likeCount');
+        countSpan.innerText = likeCount;
+
+        if (isLiked) {
+            btn.classList.remove('btn-outline-danger');
+            btn.classList.add('btn-danger');
+            heart.innerText = '❤️';
+            document.getElementById('likeText').innerText = 'Liked';
+        } else {
+            btn.classList.remove('btn-danger');
+            btn.classList.add('btn-outline-danger');
+            heart.innerText = '🤍';
+            document.getElementById('likeText').innerText = 'Like';
+        }
+    }
+
+    function toggleLike() {
+        isLiked = !isLiked;
+        likeCount += isLiked ? 1 : -1;
+        if (likeCount < 0) likeCount = 0;
+        localStorage.setItem('liked_' + postSlug, isLiked);
+        localStorage.setItem('like_count_' + postSlug, likeCount);
+        updateLikeUI();
+    }
+
+    // Follow logic
+    let isFollowing = localStorage.getItem('follow_{{ post.author.username }}') === 'true';
+
+    function updateFollowUI() {
+        const btn = document.getElementById('followBtn');
+        const text = document.getElementById('followText');
+        const icon = document.getElementById('followIcon');
+
+        if (isFollowing) {
+            btn.classList.remove('btn-outline-primary');
+            btn.classList.add('btn-primary');
+            icon.innerText = '✓';
+            text.innerText = 'Following';
+        } else {
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-outline-primary');
+            icon.innerText = '👤';
+            text.innerText = 'Follow Author';
+        }
+    }
+
+    function toggleFollow() {
+        isFollowing = !isFollowing;
+        localStorage.setItem('follow_{{ post.author.username }}', isFollowing);
+        updateFollowUI();
+    }
+
+    // Save Post logic
+    let isSaved = localStorage.getItem('saved_' + postSlug) === 'true';
+
+    function updateSaveUI() {
+        const btn = document.getElementById('saveBtn');
+        const text = document.getElementById('saveText');
+
+        if (isSaved) {
+            btn.classList.remove('btn-outline-success');
+            btn.classList.add('btn-success');
+            text.innerText = 'Saved';
+        } else {
+            btn.classList.remove('btn-success');
+            btn.classList.add('btn-outline-success');
+            text.innerText = 'Save Post';
+        }
+    }
+
+    function toggleSave() {
+        isSaved = !isSaved;
+        localStorage.setItem('saved_' + postSlug, isSaved);
+        updateSaveUI();
+    }
+
+    // Initialize UI on load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateLikeUI();
+        updateFollowUI();
+        updateSaveUI();
+    });
+</script>
 
 {% endblock %}
