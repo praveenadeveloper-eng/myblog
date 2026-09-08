@@ -143,29 +143,29 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-CLOUDINARY_CLOUD_NAME = (
-    os.environ.get('CLOUDINARY_CLOUD_NAME')
-    or os.environ.get('CLOUD_NAME')
-    or os.environ.get('CLOUDINARY_NAME')
-    or 'azmgtkir'
-)
-
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': CLOUDINARY_CLOUD_NAME,
+    'CLOUD_NAME': (
+        os.environ.get('CLOUDINARY_CLOUD_NAME')
+        or os.environ.get('CLOUD_NAME')
+        or 'azmgtkir'
+    ),
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+    'API_SECRET': (
+        os.environ.get('CLOUDINARY_API_SECRET')
+        or os.environ.get('CLOUDINARY_SECRET')
+        or 'CjCNLMVbLcGMe3hLUmVaw1s-a8U'
+    ),
 }
 
-if os.environ.get('CLOUDINARY_API_KEY') or os.environ.get('CLOUDINARY_CLOUD_NAME'):
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-    STORAGES = {
-        "default": {
-            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-        },
-        "staticfiles": {
-            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-        },
-    }
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
