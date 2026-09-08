@@ -149,7 +149,7 @@ CLOUDINARY_STORAGE = {
         or os.environ.get('CLOUD_NAME')
         or 'azmgtkir'
     ),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '661351447224143'),
     'API_SECRET': (
         os.environ.get('CLOUDINARY_API_SECRET')
         or os.environ.get('CLOUDINARY_SECRET')
